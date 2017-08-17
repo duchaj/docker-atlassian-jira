@@ -14,8 +14,8 @@ RUN apt-get update -qq \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Download Oracle JDK
-ENV ORACLE_JDK_VERSION jdk-8u121
-ENV ORACLE_JDK_URL    http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-linux-x64.tar.gz
+ENV ORACLE_JDK_VERSION jdk-8u144
+ENV ORACLE_JDK_URL    http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.tar.gz
 RUN mkdir -p /opt/jdk/$ORACLE_JDK_VERSION && \
     wget --header "Cookie: oraclelicense=accept-securebackup-cookie" -O /opt/jdk/$ORACLE_JDK_VERSION/$ORACLE_JDK_VERSION.tar.gz $ORACLE_JDK_URL && \
     tar -zxf /opt/jdk/$ORACLE_JDK_VERSION/$ORACLE_JDK_VERSION.tar.gz --strip-components=1 -C /opt/jdk/$ORACLE_JDK_VERSION && \
@@ -23,7 +23,7 @@ RUN mkdir -p /opt/jdk/$ORACLE_JDK_VERSION && \
     update-alternatives --install /usr/bin/java java /opt/jdk/$ORACLE_JDK_VERSION/bin/java 100 && \
     update-alternatives --install /usr/bin/javac javac /opt/jdk/$ORACLE_JDK_VERSION/bin/javac 100
 
-ENV DOWNLOAD_URL        https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-
+ENV DOWNLOAD_URL        https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-7.4.2-x64.bin
 
 ENV JAVA_HOME /opt/jdk/${ORACLE_JDK_VERSION}
 ENV JAVA_TRUSTSTORE ${JAVA_HOME}/jre/lib/security/cacerts
@@ -49,7 +49,7 @@ RUN \
     chown -R ${RUN_USER}:${RUN_GROUP} ${JIRA_HOME}
 
 ENV JIRA_INSTALL_DIR   /opt/atlassian/jira
-ENV JIRA_VERSION 7.3.1
+ENV JIRA_VERSION 7.4.2
 
 RUN mkdir -p                             ${JIRA_INSTALL_DIR} \
     && curl -L --silent                  ${DOWNLOAD_URL}${JIRA_VERSION}.tar.gz | tar -xz --strip=1 -C "$JIRA_INSTALL_DIR" \
